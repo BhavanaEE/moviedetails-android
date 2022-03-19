@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Movie Details Application</string>
+    <string name="Popular">Popular</string>
+    <string name="current_year">Current Year</string>
 </resources>
