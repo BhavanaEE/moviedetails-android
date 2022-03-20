@@ -9,7 +9,7 @@ data class Movie (
     val releaseDate: Date,
     val overView: String,
     val imageUrl:String,
-    val voteAverage:Int,
+    val voteAverage:Double,
     val voteCount:Int
 )
 
