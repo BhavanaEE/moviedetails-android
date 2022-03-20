@@ -14,12 +14,14 @@ import java.util.*
 
 class MovieViewModel: ViewModel() {
     private val _listOfMovies = MutableLiveData(Movies(listOf(Movie(0, "", "", Date(), "", "", 0.0, 0))))
+    private val _listOfCurrentYearMovies = MutableLiveData(Movies(listOf(Movie(0, "", "", Date(), "", "", 0.0, 0))))
 
     val listOfMovies: MutableLiveData<Movies> = _listOfMovies
+    val listOfCurrentYearMovies:MutableLiveData<Movies> = _listOfCurrentYearMovies
 
     fun getMovies(movieRepository: MovieRepository) {
-        val userResponse=movieRepository.getMovies()
-        userResponse.enqueue(object : Callback<APIResponse> {
+        val movieResponse=movieRepository.getMovies()
+        movieResponse.enqueue(object : Callback<APIResponse> {
             override fun onFailure(call: Call<APIResponse>?, t: Throwable?) {
                 Log.v("retrofit", t?.message.toString())
             }
@@ -27,6 +29,20 @@ class MovieViewModel: ViewModel() {
             override fun onResponse(call: Call<APIResponse>?, response: Response<APIResponse>?) {
                 _listOfMovies.postValue(Movies(movieRepository.convertDTOIntoUIModel(response!!.body()!!.movies)))
                 Log.i("data= ", response.body().toString())
+            }
+        })
+    }
+
+    fun getCurrentYearMovies(movieRepository: MovieRepository) {
+        val currentYearMovieResponse=movieRepository.getCurrentYearMovies()
+        currentYearMovieResponse.enqueue(object : Callback<APIResponse> {
+            override fun onFailure(call: Call<APIResponse>?, t: Throwable?) {
+                Log.v("retrofit", t?.message.toString())
+            }
+
+            override fun onResponse(call: Call<APIResponse>?, response: Response<APIResponse>?) {
+                _listOfCurrentYearMovies.postValue(Movies(movieRepository.convertDTOIntoUIModel(response!!.body()!!.movies)))
+                Log.i("data BHavana= ", response.body().toString())
             }
         })
     }

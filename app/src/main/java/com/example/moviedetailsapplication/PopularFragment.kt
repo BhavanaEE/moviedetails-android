@@ -44,7 +44,7 @@ class PopularFragment:Fragment(R.layout.fragment_popular) {
         popularMovieListRV.adapter = MoviesAdapter(movies)
         viewModel.getMovies(movieRepository)
         viewModel.listOfMovies.observe(viewLifecycleOwner) {
-            popularMovieListRV.adapter = MoviesAdapter(it.listOfMovies)
+            popularMovieListRV.adapter = MoviesAdapter(it.moviesList)
         }
     }
 }

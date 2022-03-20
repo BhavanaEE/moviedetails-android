@@ -12,7 +12,6 @@ class MovieRecyclerViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemVie
     val tvMovieName: TextView = itemView!!.findViewById<TextView>(R.id.movieName)
     val releaseYear: TextView = itemView!!.findViewById<TextView>(R.id.releaseYear)
     val language:TextView = itemView!!.findViewById<TextView>(R.id.language)
-//    val overview:TextView = itemView!!.findViewById<TextView>(R.id.overView)
     val image: ImageView = itemView!!.findViewById<AppCompatImageView>(R.id.moviePoster)
 
 }

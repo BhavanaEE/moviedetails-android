@@ -26,7 +26,6 @@ class MoviesAdapter(val movies: List<Movie>) : RecyclerView.Adapter<MovieRecycle
         holder.tvMovieName.text = movies.get(position).title
         holder.releaseYear.text = movies.get(position).releaseDate.toString()
         holder.language.text=movies.get(position).originalLanguage
-//        holder.overview.text=movies.get(position).overView
         val imageUrl="https://image.tmdb.org/t/p/w200"+movies.get(position).imageUrl
         Glide.with(holder.itemView.context).load(imageUrl)
             .apply(RequestOptions().centerCrop())

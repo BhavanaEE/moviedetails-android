@@ -7,4 +7,7 @@ interface MoviesInterface {
 
     @GET("movie?sort_by=popularity.desc&api_key=e7d826d84097c8429e815cd8ab31c7a0")
     fun getMovies(): Call<APIResponse>
+
+    @GET("movie?primary_release_year=2022&api_key=e7d826d84097c8429e815cd8ab31c7a0")
+    fun getCurrentYearMovies(): Call<APIResponse>
 }
