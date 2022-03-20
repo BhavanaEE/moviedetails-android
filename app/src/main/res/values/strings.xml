@@ -1,5 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Movie Details Application</string>
     <string name="Popular">Popular</string>
     <string name="current_year">Current Year</string>
+    <string name="movieName">Movie Name</string>
+    <string name="releaseYear">Release Year</string>
+    <string name="movieOverview">Overview</string>
+    <string name="language">Language</string>
+    <string name="displayMessage"><b>%1$s</b>\n\n<i>%2$s</i></string>
 </resources>
