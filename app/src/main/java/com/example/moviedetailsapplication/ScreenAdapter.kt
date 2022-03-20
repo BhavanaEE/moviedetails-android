@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-class ScreenAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+class ScreenAdapter(fm: FragmentManager,behaviour:Int) : FragmentStatePagerAdapter(fm,behaviour) {
     override fun getCount(): Int =2
 
     private val titles = listOf<String>(
