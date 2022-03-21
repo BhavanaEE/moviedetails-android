@@ -9,12 +9,18 @@ class MovieRepository(val usersInterface: MoviesInterface) {
         return usersInterface.getMovies()
     }
 
-    fun getCurrentYearMovies(): Call<APIResponse>{
-        return usersInterface.getCurrentYearMovies()
+    fun getCurrentYearMovies(query: Int): Call<APIResponse>{
+        return usersInterface.getMovieByYear(query)
     }
 
-    fun convertDTOIntoUIModel(movieResponses: List<MovieResponse>): List<Movie> {
-        return movieResponses.map {
+    fun getSearchedMovies(query: String): Call<APIResponse>{
+        return usersInterface.searchMovie(query)
+    }
+
+    fun convertIntoUIModel(movieResponses: List<MovieResponse>): List<Movie> {
+        return movieResponses.filter {
+            !it.imageUrl.isNullOrEmpty()
+        }.map {
             Movie(
                 it.id, it.title, it.language, it.releaseDate, it.overView,it.imageUrl,it.voteAverage,it.voteCount)
         }
