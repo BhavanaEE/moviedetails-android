@@ -7,5 +7,7 @@
     <string name="releaseYear">Release Year</string>
     <string name="movieOverview">Overview</string>
     <string name="language">Language</string>
-    <string name="displayMessage"><b>%1$s</b>\n\n<i>%2$s</i></string>
+    <string name="displayMessage"><i>%1$s</i>\n\n<i>%2$s</i></string>
+    <string name="Search">Search</string>
+    <string name="enterMovieName">Enter movie name</string>
 </resources>
