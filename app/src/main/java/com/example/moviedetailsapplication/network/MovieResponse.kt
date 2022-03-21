@@ -14,10 +14,7 @@ data class MovieResponse(
     val language: String,
 
     @SerializedName("release_date")
-    val releaseDate: Date,
-
-    @SerializedName("poster_path")
-    val avatar: String,
+    val releaseDate: String,
 
     @SerializedName("overview")
     val overView: String,
