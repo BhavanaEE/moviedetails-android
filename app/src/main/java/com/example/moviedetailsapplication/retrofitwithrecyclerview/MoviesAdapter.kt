@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.moviedetailsapplication.*
 import com.example.moviedetailsapplication.ui.Movie
+import com.example.moviedetailsapplication.ui.MovieDetails
 
 class MoviesAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<MovieRecyclerViewHolder>(){
 
@@ -22,20 +23,18 @@ class MoviesAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movi
     }
 
     override fun onBindViewHolder(holder: MovieRecyclerViewHolder, position: Int) {
-
         holder.tvMovieName.text = movies.get(position).title
-        holder.releaseYear.text = movies.get(position).releaseDate.toString()
+        holder.releaseYear.text = movies.get(position).releaseDate
         holder.language.text=movies.get(position).originalLanguage
-        val imageUrl="https://image.tmdb.org/t/p/w200"+movies.get(position).imageUrl
+        val imageUrl= movies.get(position).imageUrl
         Glide.with(holder.itemView.context).load(imageUrl)
             .apply(RequestOptions().centerCrop())
             .into(holder.image)
+        val movieDetails = MovieDetails(movies.get(position).title,movies.get(position).overView,movies.get(position).imageUrl)
         holder.itemView.setOnClickListener {
 
             val intent = Intent(it.context, MovieDetailsActivity::class.java)
-            intent.putExtra(MOVIENAME, holder.tvMovieName.text.toString())
-            intent.putExtra(OVERVIEW,movies.get(position).overView)
-            intent.putExtra(IMAGEURL,movies.get(position).imageUrl)
+            intent.putExtra(MOVIEDETAILS, movieDetails)
             it.context.startActivity(intent);
         }
     }
