@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviedetailsapplication.databinding.FragmentCurrentYearBinding
 import com.example.moviedetailsapplication.network.MovieRepository
-import com.example.moviedetailsapplication.network.MoviesInterface
+import com.example.moviedetailsapplication.network.RetrofitService
 import com.example.moviedetailsapplication.network.RetrofitApi
 import com.example.moviedetailsapplication.retrofitwithrecyclerview.MovieViewModel
 import com.example.moviedetailsapplication.retrofitwithrecyclerview.MoviesAdapter
@@ -18,14 +18,13 @@ import java.util.ArrayList
 
 class CurrentYearFragment:Fragment(R.layout.fragment_current_year) {
     private lateinit var binding: FragmentCurrentYearBinding
-    private lateinit var movieRepository: MovieRepository
+    private val movieRepository by lazy { MovieRepository(RetrofitApi.getClient().create(RetrofitService::class.java))}
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCurrentYearBinding.inflate(inflater, container, false)
-        movieRepository = MovieRepository(RetrofitApi.getClient().create(MoviesInterface::class.java))
         return binding.root
 
     }

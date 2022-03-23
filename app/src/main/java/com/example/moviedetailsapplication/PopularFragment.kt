@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviedetailsapplication.network.MovieRepository
-import com.example.moviedetailsapplication.network.MoviesInterface
+import com.example.moviedetailsapplication.network.RetrofitService
 import com.example.moviedetailsapplication.databinding.FragmentPopularBinding
 import com.example.moviedetailsapplication.network.RetrofitApi
 import com.example.moviedetailsapplication.retrofitwithrecyclerview.MovieViewModel
@@ -18,8 +18,7 @@ import java.util.ArrayList
 
 class PopularFragment:Fragment(R.layout.fragment_popular) {
     private lateinit var binding: FragmentPopularBinding
-    private lateinit var movieRepository: MovieRepository
-    private var adapter:MoviesAdapter?=null
+    private val movieRepository by lazy { MovieRepository(RetrofitApi.getClient().create(RetrofitService::class.java))}
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +26,6 @@ class PopularFragment:Fragment(R.layout.fragment_popular) {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPopularBinding.inflate(inflater, container, false)
-        movieRepository = MovieRepository(RetrofitApi.getClient().create(MoviesInterface::class.java))
         return binding.root
     }
 
@@ -42,8 +40,7 @@ class PopularFragment:Fragment(R.layout.fragment_popular) {
             LinearLayoutManager(activity).apply { orientation = LinearLayoutManager.VERTICAL }
 
         val movies = ArrayList<Movie>()
-        adapter = MoviesAdapter(movies)
-        popularMovieListRV.adapter = adapter
+        popularMovieListRV.adapter = MoviesAdapter(movies)
         viewModel.getMovies(movieRepository)
         viewModel.listOfMovies.observe(viewLifecycleOwner) {
             popularMovieListRV.adapter = MoviesAdapter(it.moviesList)
