@@ -18,7 +18,8 @@ import java.util.ArrayList
 
 class PopularFragment:Fragment(R.layout.fragment_popular) {
     private lateinit var binding: FragmentPopularBinding
-    private val movieRepository by lazy { MovieRepository(RetrofitApi.getClient().create(RetrofitService::class.java))}
+    private val viewModel: MovieViewModel by lazy { ViewModelProvider(this,
+        MovieViewModelFactory( MovieRepository(RetrofitApi.getClient().create(RetrofitService::class.java)))).get(MovieViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,16 +33,13 @@ class PopularFragment:Fragment(R.layout.fragment_popular) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = activity?.let { ViewModelProvider(it)[MovieViewModel::class.java] }
-            ?: throw RuntimeException("Not a Activity")
-
         val popularMovieListRV = binding.popularMovieList
         popularMovieListRV.layoutManager =
             LinearLayoutManager(activity).apply { orientation = LinearLayoutManager.VERTICAL }
 
         val movies = ArrayList<Movie>()
         popularMovieListRV.adapter = MoviesAdapter(movies)
-        viewModel.getMovies(movieRepository)
+        viewModel.getMovies()
         viewModel.listOfMovies.observe(viewLifecycleOwner) {
             popularMovieListRV.adapter = MoviesAdapter(it.moviesList)
         }

@@ -18,7 +18,9 @@ import java.util.ArrayList
 
 class CurrentYearFragment:Fragment(R.layout.fragment_current_year) {
     private lateinit var binding: FragmentCurrentYearBinding
-    private val movieRepository by lazy { MovieRepository(RetrofitApi.getClient().create(RetrofitService::class.java))}
+    private val viewModel: MovieViewModel by lazy { ViewModelProvider(this,
+        MovieViewModelFactory( MovieRepository(RetrofitApi.getClient().create(RetrofitService::class.java)))).get(MovieViewModel::class.java) }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,17 +33,13 @@ class CurrentYearFragment:Fragment(R.layout.fragment_current_year) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val viewModel = activity?.let { ViewModelProvider(it)[MovieViewModel::class.java] }
-            ?: throw RuntimeException("Not a Activity")
-
         val currentYearMovieListRV = binding.currentYearMoviesList
         currentYearMovieListRV.layoutManager =
             LinearLayoutManager(activity).apply { orientation = LinearLayoutManager.VERTICAL }
 
         val movies = ArrayList<Movie>()
         currentYearMovieListRV.adapter = MoviesAdapter(movies)
-        viewModel.getCurrentYearMovies(movieRepository)
+        viewModel.getCurrentYearMovies()
         viewModel.listOfCurrentYearMovies.observe(viewLifecycleOwner) {
             currentYearMovieListRV.adapter = MoviesAdapter(it.moviesList)
         }
