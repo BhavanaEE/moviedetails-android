@@ -10,4 +10,8 @@
     <string name="displayMessage"><i>%1$s</i>\n\n<i>%2$s</i></string>
     <string name="Search">Search</string>
     <string name="enterMovieName">Enter movie name</string>
+    <string-array name="titles_array">
+        <item>Popular</item>
+        <item>Current Year</item>
+    </string-array>
 </resources>

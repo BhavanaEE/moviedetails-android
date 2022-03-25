@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val tabLayout= findViewById<TabLayout>(R.id.home_screen_tab_layout)
         val viewPager =  findViewById<ViewPager>(R.id.home_screen_pager)
-        val pagerAdapter = ScreenAdapter(supportFragmentManager,tabLayout.tabCount)
+        val pagerAdapter = ScreenAdapter(resources.getStringArray(R.array.titles_array),supportFragmentManager,tabLayout.tabCount)
         viewPager.adapter=pagerAdapter
         tabLayout.setupWithViewPager(viewPager)
     }
