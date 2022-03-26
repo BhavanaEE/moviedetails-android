@@ -1,28 +1,33 @@
 package com.example.moviedetailsapplication.network
 
+import com.example.moviedetailsapplication.IMAGEURL
 import com.example.moviedetailsapplication.ui.Movie
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class MovieRepository(val usersInterface: MoviesInterface) {
+class MovieRepository(val retrofitService: RetrofitService) {
 
     fun getMovies(): Call<APIResponse> {
-        return usersInterface.getMovies()
+        return retrofitService.getMovies()
     }
 
     fun getCurrentYearMovies(query: Int): Call<APIResponse>{
-        return usersInterface.getMovieByYear(query)
+        return retrofitService.getMovieByYear(query)
     }
 
     fun getSearchedMovies(query: String): Call<APIResponse>{
-        return usersInterface.searchMovie(query)
+        return retrofitService.searchMovie(query)
     }
 
     fun convertIntoUIModel(movieResponses: List<MovieResponse>): List<Movie> {
+
         return movieResponses.filter {
             !it.imageUrl.isNullOrEmpty()
         }.map {
+            val imageUrl= IMAGEURL+it.imageUrl
             Movie(
-                it.id, it.title, it.language, it.releaseDate, it.overView,it.imageUrl,it.voteAverage,it.voteCount)
+                it.id, it.title, it.language, it.releaseDate, it.overView,imageUrl,it.voteAverage,it.voteCount)
         }
     }
 }
