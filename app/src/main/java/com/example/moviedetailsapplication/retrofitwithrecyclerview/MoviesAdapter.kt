@@ -1,6 +1,5 @@
 package com.example.moviedetailsapplication.retrofitwithrecyclerview
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,7 +7,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.moviedetailsapplication.*
 import com.example.moviedetailsapplication.ui.Movie
-import com.example.moviedetailsapplication.ui.MovieDetails
 
 class MoviesAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<MovieRecyclerViewHolder>(){
 
@@ -22,20 +20,13 @@ class MoviesAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movi
         return movies.size
     }
 
-    override fun onBindViewHolder(holder: MovieRecyclerViewHolder, position: Int) {
-        holder.tvMovieName.text = movies.get(position).title
-        holder.releaseYear.text = movies.get(position).releaseDate
-        holder.language.text=movies.get(position).originalLanguage
+    override fun onBindViewHolder(movieRecyclerViewHolder: MovieRecyclerViewHolder, position: Int) {
+        movieRecyclerViewHolder.tvMovieName.text = movies.get(position).title
+        movieRecyclerViewHolder.releaseYear.text = movies.get(position).releaseDate
+        movieRecyclerViewHolder.language.text=movies.get(position).originalLanguage
         val imageUrl= movies.get(position).imageUrl
-        Glide.with(holder.itemView.context).load(imageUrl)
+        Glide.with(movieRecyclerViewHolder.itemView.context).load(imageUrl)
             .apply(RequestOptions().centerCrop())
-            .into(holder.image)
-        val movieDetails = MovieDetails(movies.get(position).title,movies.get(position).overView,movies.get(position).imageUrl)
-        holder.itemView.setOnClickListener {
-
-            val intent = Intent(it.context, MovieDetailsActivity::class.java)
-            intent.putExtra(MOVIEDETAILS, movieDetails)
-            it.context.startActivity(intent);
-        }
+            .into(movieRecyclerViewHolder.image)
     }
 }
