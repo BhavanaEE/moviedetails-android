@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.moviedetailsapplication.network.MovieRepository
-import com.example.moviedetailsapplication.network.RetrofitService
 import com.example.moviedetailsapplication.databinding.FragmentPopularBinding
+import com.example.moviedetailsapplication.network.MovieRepository
 import com.example.moviedetailsapplication.network.RetrofitApi
+import com.example.moviedetailsapplication.network.RetrofitService
 import com.example.moviedetailsapplication.retrofitwithrecyclerview.MovieViewModel
 import com.example.moviedetailsapplication.retrofitwithrecyclerview.MoviesAdapter
+import com.example.moviedetailsapplication.retrofitwithrecyclerview.RecyclerItemClickListener
 import com.example.moviedetailsapplication.ui.Movie
-import java.util.ArrayList
 
 class PopularFragment:Fragment(R.layout.fragment_popular) {
     private lateinit var binding: FragmentPopularBinding
@@ -24,7 +24,7 @@ class PopularFragment:Fragment(R.layout.fragment_popular) {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentPopularBinding.inflate(inflater, container, false)
         return binding.root
@@ -41,7 +41,7 @@ class PopularFragment:Fragment(R.layout.fragment_popular) {
         popularMovieListRV.adapter = MoviesAdapter(movies)
         viewModel.getMovies()
         viewModel.listOfMovies.observe(viewLifecycleOwner) {
-            popularMovieListRV.adapter = MoviesAdapter(it.moviesList)
+            popularMovieListRV.adapter = MoviesAdapter(it)
         }
     }
 }

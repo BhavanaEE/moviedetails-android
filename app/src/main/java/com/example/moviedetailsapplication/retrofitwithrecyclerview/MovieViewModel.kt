@@ -12,27 +12,27 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-class MovieViewModel: ViewModel() {
-    private val _listOfMovies = MutableLiveData(Movies(listOf(Movie(0, "", "", "", "", "", 0.0, 0))))
-    private val _listOfCurrentYearMovies = MutableLiveData(Movies(listOf(Movie(0, "", "", "", "", "", 0.0, 0))))
-    private val _listOfSearchedMovies = MutableLiveData(Movies(listOf(Movie(0, "", "", "", "", "", 0.0, 0))))
+class MovieViewModel(val movieRepository: MovieRepository): ViewModel() {
+    private val _listOfMovies = MutableLiveData<List<Movie>>()
+    private val _listOfCurrentYearMovies = MutableLiveData<List<Movie>>()
+    private val _listOfSearchedMovies = MutableLiveData<List<Movie>>()
 
-    val listOfMovies: LiveData<Movies> = _listOfMovies
-    val listOfCurrentYearMovies:LiveData<Movies> = _listOfCurrentYearMovies
-    val listOfSearchedMovies:LiveData<Movies> = _listOfSearchedMovies
+    val listOfMovies: LiveData<List<Movie>> = _listOfMovies
+    val listOfCurrentYearMovies:LiveData<List<Movie>> = _listOfCurrentYearMovies
+    val listOfSearchedMovies:LiveData<List<Movie>> = _listOfSearchedMovies
 
-    fun getMovies(movieRepository: MovieRepository) {
+    fun getMovies() {
         val movieResponse=movieRepository.getMovies()
         movieResponse.enqueue(object : Callback<APIResponse> {
             override fun onFailure(call: Call<APIResponse>?, t: Throwable?) {
             }
             override fun onResponse(call: Call<APIResponse>?, response: Response<APIResponse>?) {
-                _listOfMovies.postValue(Movies(movieRepository.convertIntoUIModel(response!!.body()!!.movies)))
+                _listOfMovies.postValue(movieRepository.convertIntoUIModel(response!!.body()!!.movies))
             }
         })
     }
 
-    fun getCurrentYearMovies(movieRepository: MovieRepository) {
+    fun getCurrentYearMovies() {
         val calendar = Calendar.getInstance()
         val year = calendar[Calendar.YEAR]
         val currentYearMovieResponse=movieRepository.getCurrentYearMovies(year)
@@ -40,18 +40,18 @@ class MovieViewModel: ViewModel() {
             override fun onFailure(call: Call<APIResponse>?, t: Throwable?) {
             }
             override fun onResponse(call: Call<APIResponse>?, response: Response<APIResponse>?) {
-                _listOfCurrentYearMovies.postValue(Movies(movieRepository.convertIntoUIModel(response!!.body()!!.movies)))
+                _listOfCurrentYearMovies.postValue(movieRepository.convertIntoUIModel(response!!.body()!!.movies))
             }
         })
     }
 
-    fun getListOfSearchedMovies(movieRepository: MovieRepository,query: String){
+    fun getListOfSearchedMovies(query: String){
         val currentYearMovieResponse=movieRepository.getSearchedMovies(query)
         currentYearMovieResponse.enqueue(object : Callback<APIResponse> {
             override fun onFailure(call: Call<APIResponse>?, t: Throwable?) {
             }
             override fun onResponse(call: Call<APIResponse>?, response: Response<APIResponse>?) {
-                _listOfSearchedMovies.postValue(Movies(movieRepository.convertIntoUIModel(response!!.body()!!.movies)))
+                _listOfSearchedMovies.postValue(movieRepository.convertIntoUIModel(response!!.body()!!.movies))
             }
         })
     }

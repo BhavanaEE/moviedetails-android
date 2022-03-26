@@ -41,7 +41,7 @@ class CurrentYearFragment:Fragment(R.layout.fragment_current_year) {
         currentYearMovieListRV.adapter = MoviesAdapter(movies)
         viewModel.getCurrentYearMovies()
         viewModel.listOfCurrentYearMovies.observe(viewLifecycleOwner) {
-            currentYearMovieListRV.adapter = MoviesAdapter(it.moviesList)
+            currentYearMovieListRV.adapter = MoviesAdapter(it)
         }
     }
 }
