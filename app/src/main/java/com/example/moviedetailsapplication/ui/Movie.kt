@@ -1,5 +1,9 @@
 package com.example.moviedetailsapplication.ui
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Movie (
     val id: Int,
     val title: String,
@@ -9,5 +13,5 @@ data class Movie (
     val imageUrl:String,
     val voteAverage:Double,
     val voteCount:Int
-)
+):Parcelable
 

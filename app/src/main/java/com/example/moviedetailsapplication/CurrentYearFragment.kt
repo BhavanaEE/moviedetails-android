@@ -1,5 +1,6 @@
 package com.example.moviedetailsapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.example.moviedetailsapplication.network.RetrofitService
 import com.example.moviedetailsapplication.network.RetrofitApi
 import com.example.moviedetailsapplication.retrofitwithrecyclerview.MovieViewModel
 import com.example.moviedetailsapplication.retrofitwithrecyclerview.MoviesAdapter
+import com.example.moviedetailsapplication.retrofitwithrecyclerview.RecyclerItemClickListener
 import com.example.moviedetailsapplication.ui.Movie
 import java.util.ArrayList
 
@@ -43,5 +45,19 @@ class CurrentYearFragment:Fragment(R.layout.fragment_current_year) {
         viewModel.listOfCurrentYearMovies.observe(viewLifecycleOwner) {
             currentYearMovieListRV.adapter = MoviesAdapter(it)
         }
+
+        currentYearMovieListRV.addOnItemTouchListener(
+            RecyclerItemClickListener(context, currentYearMovieListRV,
+                object : RecyclerItemClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View?, position: Int) {
+                        val intent= Intent(requireContext(),MovieDetailsActivity::class.java)
+                        intent.putExtra(MOVIEDETAILS, viewModel.listOfCurrentYearMovies.value?.get(position))
+                        startActivity(intent)
+                    }
+
+                    override fun onLongItemClick(view: View?, position: Int) {
+                    }
+                })
+        )
     }
 }

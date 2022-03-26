@@ -1,5 +1,6 @@
 package com.example.moviedetailsapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,5 +44,19 @@ class PopularFragment:Fragment(R.layout.fragment_popular) {
         viewModel.listOfMovies.observe(viewLifecycleOwner) {
             popularMovieListRV.adapter = MoviesAdapter(it)
         }
+
+        popularMovieListRV.addOnItemTouchListener(
+            RecyclerItemClickListener(context, popularMovieListRV,
+                object : RecyclerItemClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View?, position: Int) {
+                        val intent=Intent(requireContext(),MovieDetailsActivity::class.java)
+                        intent.putExtra(MOVIEDETAILS, viewModel.listOfMovies.value?.get(position))
+                        startActivity(intent)
+                    }
+
+                    override fun onLongItemClick(view: View?, position: Int) {
+                    }
+                })
+        )
     }
 }
